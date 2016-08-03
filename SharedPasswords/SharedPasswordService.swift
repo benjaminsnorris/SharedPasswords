@@ -35,6 +35,11 @@ public struct SharedPasswordService {
     }
     
     
+    // MARK: - Initializers
+    
+    public init() { }
+    
+    
     // MARK: - Internal functions
     
     public func requestCredentials<T: StateType>(state: T, store: Store<T>) -> Action? {
