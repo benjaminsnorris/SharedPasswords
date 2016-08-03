@@ -10,25 +10,25 @@ import ReSwift
 
 // MARK: - Actions
 
-struct SharedPasswordError: Action {
-    var error: ErrorType
+public struct SharedPasswordError: Action {
+    public var error: ErrorType
 }
 
-struct SharedPasswordRetrieved: Action, CustomStringConvertible {
-    var username: String
-    var password: String
+public struct SharedPasswordRetrieved: Action, CustomStringConvertible {
+    public var username: String
+    public var password: String
     
-    var description: String {
+    public var description: String {
         return "SharedPasswordRetrieved(email:\(username))"
     }
 }
 
 
-struct SharedPasswordService {
+public struct SharedPasswordService {
     
     // MARK: - Enums
     
-    enum Error: ErrorType {
+    public enum Error: ErrorType {
         case nilCredentials
         case malformedCredentials
         case missingCredentials
@@ -37,7 +37,7 @@ struct SharedPasswordService {
     
     // MARK: - Internal functions
     
-    func requestCredentials<T: StateType>(state: T, store: Store<T>) -> Action? {
+    public func requestCredentials<T: StateType>(state: T, store: Store<T>) -> Action? {
         SecRequestSharedWebCredential(nil, nil) { credentials, error in
             dispatch_async(dispatch_get_main_queue()) {
                 guard error == nil else {
