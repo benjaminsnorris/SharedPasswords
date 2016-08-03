@@ -11,6 +11,7 @@
 		705EF4D71D528F73000D65E1 /* SharedPasswords.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 705EF4CC1D528F73000D65E1 /* SharedPasswords.framework */; };
 		705EF4DC1D528F73000D65E1 /* SharedPasswordsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705EF4DB1D528F73000D65E1 /* SharedPasswordsTests.swift */; };
 		705EF4E91D528FFF000D65E1 /* SharedPasswordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705EF4E81D528FFF000D65E1 /* SharedPasswordService.swift */; };
+		705EF50E1D529125000D65E1 /* ReSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 705EF50D1D529125000D65E1 /* ReSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +32,7 @@
 		705EF4DB1D528F73000D65E1 /* SharedPasswordsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedPasswordsTests.swift; sourceTree = "<group>"; };
 		705EF4DD1D528F73000D65E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		705EF4E81D528FFF000D65E1 /* SharedPasswordService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedPasswordService.swift; sourceTree = "<group>"; };
+		705EF50D1D529125000D65E1 /* ReSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReSwift.framework; path = ReSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				705EF50E1D529125000D65E1 /* ReSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,6 +60,7 @@
 			children = (
 				705EF4CE1D528F73000D65E1 /* SharedPasswords */,
 				705EF4DA1D528F73000D65E1 /* SharedPasswordsTests */,
+				705EF50F1D529129000D65E1 /* Frameworks */,
 				705EF4CD1D528F73000D65E1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -95,6 +99,14 @@
 				705EF4D11D528F73000D65E1 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		705EF50F1D529129000D65E1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				705EF50D1D529125000D65E1 /* ReSwift.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
