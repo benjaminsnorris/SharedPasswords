@@ -12,11 +12,20 @@ import ReSwift
 
 public struct SharedPasswordError: Action {
     public var error: ErrorType
+    
+    public init(error: ErrorType) {
+        self.error = error
+    }
 }
 
 public struct SharedPasswordRetrieved: Action, CustomStringConvertible {
     public var username: String
     public var password: String
+    
+    public init(username: String, password: String) {
+        self.username = username
+        self.password = password
+    }
     
     public var description: String {
         return "SharedPasswordRetrieved(email:\(username))"
