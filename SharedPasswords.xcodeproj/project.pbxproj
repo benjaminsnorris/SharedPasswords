@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7026FB591D5702A300E7F2F6 /* OnePasswordExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7026FB581D5702A300E7F2F6 /* OnePasswordExtension.framework */; };
 		705EF4D01D528F73000D65E1 /* SharedPasswords.h in Headers */ = {isa = PBXBuildFile; fileRef = 705EF4CF1D528F73000D65E1 /* SharedPasswords.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		705EF4D71D528F73000D65E1 /* SharedPasswords.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 705EF4CC1D528F73000D65E1 /* SharedPasswords.framework */; };
 		705EF4DC1D528F73000D65E1 /* SharedPasswordsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705EF4DB1D528F73000D65E1 /* SharedPasswordsTests.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7026FB581D5702A300E7F2F6 /* OnePasswordExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OnePasswordExtension.framework; path = OnePasswordExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		705EF4CC1D528F73000D65E1 /* SharedPasswords.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SharedPasswords.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		705EF4CF1D528F73000D65E1 /* SharedPasswords.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedPasswords.h; sourceTree = "<group>"; };
 		705EF4D11D528F73000D65E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -32,7 +34,7 @@
 		705EF4DB1D528F73000D65E1 /* SharedPasswordsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedPasswordsTests.swift; sourceTree = "<group>"; };
 		705EF4DD1D528F73000D65E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		705EF4E81D528FFF000D65E1 /* SharedPasswordService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedPasswordService.swift; sourceTree = "<group>"; };
-		705EF50D1D529125000D65E1 /* ReSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReSwift.framework; path = ReSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		705EF50D1D529125000D65E1 /* ReSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ReSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7026FB591D5702A300E7F2F6 /* OnePasswordExtension.framework in Frameworks */,
 				705EF50E1D529125000D65E1 /* ReSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -104,6 +107,7 @@
 		705EF50F1D529129000D65E1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7026FB581D5702A300E7F2F6 /* OnePasswordExtension.framework */,
 				705EF50D1D529125000D65E1 /* ReSwift.framework */,
 			);
 			name = Frameworks;
