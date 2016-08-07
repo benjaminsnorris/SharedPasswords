@@ -7,6 +7,7 @@
 
 import Foundation
 import ReSwift
+import OnePasswordExtension
 
 // MARK: - Actions
 
@@ -49,7 +50,7 @@ public struct SharedPasswordService {
     public init() { }
     
     
-    // MARK: - Internal functions
+    // MARK: - Public functions
     
     public func requestCredentials<T: StateType>(state: T, store: Store<T>) -> Action? {
         SecRequestSharedWebCredential(nil, nil) { credentials, error in
@@ -79,6 +80,27 @@ public struct SharedPasswordService {
             }
         }
         return nil
+    }
+    
+    public func findLoginFrom1Password<T: StateType>(with urlString: String, viewController: UIViewController, button: AnyObject) -> (state: T, store: Store<T>) -> Action? {
+        return { state, store in
+            OnePasswordExtension.sharedExtension().findLoginForURLString(urlString, forViewController: viewController, sender: button) { loginDictionary, error in
+                guard error == nil else {
+                    store.dispatch(SharedPasswordError(error: error!))
+                    return
+                }
+                guard let loginDictionary = loginDictionary as? [String: AnyObject] where loginDictionary.count > 0 else {
+                    store.dispatch(SharedPasswordError(error: Error.malformedCredentials))
+                    return
+                }
+                guard let username = loginDictionary[AppExtensionUsernameKey] as? String, password = loginDictionary[AppExtensionPasswordKey] as? String else {
+                    store.dispatch(SharedPasswordError(error: Error.missingCredentials))
+                    return
+                }
+                store.dispatch(SharedPasswordRetrieved(username: username, password: password))
+            }
+            return nil
+        }
     }
 
 }
