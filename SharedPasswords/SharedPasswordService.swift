@@ -52,34 +52,36 @@ public struct SharedPasswordService {
     
     // MARK: - Public functions
     
-    public func requestCredentials<T: StateType>(state: T, store: Store<T>) -> Action? {
-        SecRequestSharedWebCredential(nil, nil) { credentials, error in
-            dispatch_async(dispatch_get_main_queue()) {
-                guard error == nil else {
-                    store.dispatch(SharedPasswordError(error: error!))
-                    return
+    public func requestCredentials<T: StateType>(for domain: String? = nil) -> (state: T, store: Store<T>) -> Action? {
+        return { state, store in
+            SecRequestSharedWebCredential(domain, nil) { credentials, error in
+                dispatch_async(dispatch_get_main_queue()) {
+                    guard error == nil else {
+                        store.dispatch(SharedPasswordError(error: error!))
+                        return
+                    }
+                    guard let unwrappedCredentials = credentials else {
+                        store.dispatch(SharedPasswordError(error: Error.nilCredentials))
+                        return
+                    }
+                    let arrayCredentials = unwrappedCredentials as [AnyObject]
+                    guard let typedCredentials = arrayCredentials as? [[String: AnyObject]] else {
+                        store.dispatch(SharedPasswordError(error: Error.malformedCredentials))
+                        return
+                    }
+                    guard let credential = typedCredentials.first else {
+                        store.dispatch(SharedPasswordError(error: Error.missingCredentials))
+                        return
+                    }
+                    guard let username = credential[String(kSecAttrAccount)] as? String, password = credential[String(kSecSharedPassword)] as? String else {
+                        store.dispatch(SharedPasswordError(error: Error.missingCredentials))
+                        return
+                    }
+                    store.dispatch(SharedPasswordRetrieved(username: username, password: password))
                 }
-                guard let unwrappedCredentials = credentials else {
-                    store.dispatch(SharedPasswordError(error: Error.nilCredentials))
-                    return
-                }
-                let arrayCredentials = unwrappedCredentials as [AnyObject]
-                guard let typedCredentials = arrayCredentials as? [[String: AnyObject]] else {
-                    store.dispatch(SharedPasswordError(error: Error.malformedCredentials))
-                    return
-                }
-                guard let credential = typedCredentials.first else {
-                    store.dispatch(SharedPasswordError(error: Error.missingCredentials))
-                    return
-                }
-                guard let username = credential[String(kSecAttrAccount)] as? String, password = credential[String(kSecSharedPassword)] as? String else {
-                    store.dispatch(SharedPasswordError(error: Error.missingCredentials))
-                    return
-                }
-                store.dispatch(SharedPasswordRetrieved(username: username, password: password))
             }
+            return nil
         }
-        return nil
     }
     
     public func findLoginFrom1Password<T: StateType>(with urlString: String, viewController: UIViewController, button: AnyObject) -> (state: T, store: Store<T>) -> Action? {
