@@ -7,4 +7,7 @@
    <FileRef
       location = "group:Carthage/Checkouts/ReSwift/ReSwift.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/onepassword-app-extension/OnePasswordExtension.xcodeproj">
+   </FileRef>
 </Workspace>

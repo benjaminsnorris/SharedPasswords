@@ -1,3 +1,6 @@
 [submodule "Carthage/Checkouts/ReSwift"]
 	path = Carthage/Checkouts/ReSwift
 	url = https://github.com/ReSwift/ReSwift.git
+[submodule "Carthage/Checkouts/onepassword-app-extension"]
+	path = Carthage/Checkouts/onepassword-app-extension
+	url = https://github.com/AgileBits/onepassword-app-extension.git
