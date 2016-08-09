@@ -84,7 +84,6 @@ public struct SharedPasswordService {
                     }
                     store.dispatch(SharedPasswordRetrieved(username: username, password: password))
                     guard let domain = domain else { return }
-                    store.dispatch(self.saveSharedCredentialIfNeeded(for: domain, username: username, password: password))
                 }
             }
             return nil
