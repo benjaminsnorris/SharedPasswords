@@ -33,6 +33,20 @@ public struct SharedPasswordRetrieved: Action, CustomStringConvertible {
     }
 }
 
+public struct SharedPasswordCreated: Action, CustomStringConvertible {
+    public var username: String
+    public var password: String
+    
+    public init(username: String, password: String) {
+        self.username = username
+        self.password = password
+    }
+    
+    public var description: String {
+        return "SharedPasswordRetrieved(email:\(username))"
+    }
+}
+
 
 public struct SharedPasswordService {
     
@@ -132,6 +146,32 @@ public struct SharedPasswordService {
                     return
                 }
                 store.dispatch(SharedPasswordRetrieved(username: username, password: password))
+            }
+            return nil
+        }
+    }
+    
+    public func createLoginIn1Password<T: StateType>(for urlString: String, appTitle: String, username: String? = nil, password: String? = nil, viewController: UIViewController, button: AnyObject) -> (state: T, store: Store<T>) -> Action? {
+        return { state, store in
+            let username = username ?? ""
+            let password = password ?? ""
+            let loginDetails: [String: AnyObject] = [
+                AppExtensionTitleKey: appTitle,
+                AppExtensionUsernameKey: username,
+                AppExtensionPasswordKey: password,
+            ]
+            OnePasswordExtension.sharedExtension().storeLoginForURLString(urlString, loginDetails: loginDetails, passwordGenerationOptions: nil, forViewController: viewController, sender: button) { loginDictionary, error in
+                dispatch_async(dispatch_get_main_queue()) {
+                    if let loginDictionary = loginDictionary where error == nil {
+                        guard let username = loginDictionary[AppExtensionUsernameKey] as? String, password = loginDictionary[AppExtensionPasswordKey] as? String else {
+                            store.dispatch(SharedPasswordError(error: Error.missingCredentials))
+                            return
+                        }
+                        store.dispatch(SharedPasswordCreated(username: username, password: password))
+                    } else if let error = error where error.code != Int(AppExtensionErrorCodeCancelledByUser) {
+                        store.dispatch(SharedPasswordError(error: error))
+                    }
+                }
             }
             return nil
         }
