@@ -179,14 +179,26 @@ public struct SharedPasswordService {
     
     public func presentResetSharedCredentials<T: StateType>(for urlString: String, username: String?, viewController: UIViewController, sender: AnyObject) -> (state: T, store: Store<T>) -> Action? {
         return { state, store in
+            var savedCredentials = [String: [String: AnyObject]]()
+            var savedDomainCredentials = [String: AnyObject]()
+            if let credentials = NSUserDefaults.standardUserDefaults().objectForKey(SharedPasswordService.sharedCredentialsKey) as? [String: [String: AnyObject]] {
+                savedCredentials = credentials
+                if let domainCredentials = savedCredentials[urlString] {
+                    savedDomainCredentials = domainCredentials
+                }
+            }
+
             let alert = UIAlertController(title: NSLocalizedString("Reset shared credentials", comment: "Title for action sheet to reset shared credentials when logging in"), message: NSLocalizedString("This is typically not needed.\n\nBy default, the app will only save your shared credentials once, as subsequent attempts force you to confirm a password update whether it has changed or not.\n\nIf necessary, you can reset all shared credentials, or reset a specific username to force the credentials to save.", comment: "Explanation for action sheet to reset shared credentials"), preferredStyle: .ActionSheet)
             if let username = username where username.characters.count > 0 {
                 alert.addAction(UIAlertAction(title: NSLocalizedString("Force password update", comment: "Action title"), style: .Default) { action in
-                    // TODO: Clear saved password from defaults for username
+                    savedDomainCredentials.removeValueForKey(username)
+                    savedCredentials[urlString] = savedDomainCredentials
+                    NSUserDefaults.standardUserDefaults().setObject(savedCredentials, forKey: SharedPasswordService.sharedCredentialsKey)
                 })
             }
             alert.addAction(UIAlertAction(title: NSLocalizedString("Reset all credentials", comment: "Action title"), style: .Destructive) { action in
-                // TODO: Clear all saved passwords for urlString
+                savedCredentials.removeValueForKey(urlString)
+                NSUserDefaults.standardUserDefaults().setObject(savedCredentials, forKey: SharedPasswordService.sharedCredentialsKey)
             })
             alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel button title"), style: .Cancel, handler: nil))
             if let barButtonItem = sender as? UIBarButtonItem {
