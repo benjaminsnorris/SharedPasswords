@@ -188,6 +188,7 @@ public struct SharedPasswordService {
             alert.addAction(UIAlertAction(title: NSLocalizedString("Reset all credentials", comment: "Action title"), style: .Destructive) { action in
                 // TODO: Clear all saved passwords for urlString
             })
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel button title"), style: .Cancel, handler: nil))
             if let barButtonItem = sender as? UIBarButtonItem {
                 alert.popoverPresentationController?.barButtonItem = barButtonItem
             } else if let view = sender as? UIView {
