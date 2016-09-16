@@ -47,6 +47,24 @@ public struct SharedPasswordCreated: Action, CustomStringConvertible {
     }
 }
 
+public struct SharedPasswordSaved: Action {
+    public var domain: String
+    public var username: String
+    public init(username: String, domain: String) {
+        self.username = username
+        self.domain = domain
+    }
+}
+
+public struct SharedPasswordRemoved: Action {
+    public var domain: String
+    public var username: String
+    public init(username: String, domain: String) {
+        self.username = username
+        self.domain = domain
+    }
+}
+
 
 public struct SharedPasswordService {
     
@@ -119,11 +137,39 @@ public struct SharedPasswordService {
             }
             SecAddSharedWebCredential(urlString, username, password) { error in
                 if let error = error {
+                    store.dispatch(SharedPasswordError(error: error))
                     print("status=failed-to-add-shared-credential error=\(error) domain=\(urlString) username=\(username)")
                 } else {
                     savedDomainCredentials[username] = true
                     savedCredentials[urlString] = savedDomainCredentials
                     NSUserDefaults.standardUserDefaults().setObject(savedCredentials, forKey: SharedPasswordService.sharedCredentialsKey)
+                    store.dispatch(SharedPasswordSaved(username: username, domain: urlString))
+                }
+            }
+            return nil
+        }
+    }
+    
+    public func removeSharedCredentials<T: StateType>(for urlString: String, username: String) -> (state: T, store: Store<T>) -> Action? {
+        return { state, store in
+            var savedCredentials = [String: [String: AnyObject]]()
+            var savedDomainCredentials = [String: AnyObject]()
+            if let credentials = NSUserDefaults.standardUserDefaults().objectForKey(SharedPasswordService.sharedCredentialsKey) as? [String: [String: AnyObject]] {
+                savedCredentials = credentials
+                if let domainCredentials = savedCredentials[urlString] {
+                    savedDomainCredentials = domainCredentials
+                }
+            }
+
+            SecAddSharedWebCredential(urlString, username, nil) { error in
+                if let error = error {
+                    store.dispatch(SharedPasswordError(error: error))
+                    print("status=failed-to-add-shared-credential error=\(error) domain=\(urlString) username=\(username)")
+                } else {
+                    savedDomainCredentials.removeValueForKey(username)
+                    savedCredentials[urlString] = savedDomainCredentials
+                    NSUserDefaults.standardUserDefaults().setObject(savedCredentials, forKey: SharedPasswordService.sharedCredentialsKey)
+                    store.dispatch(SharedPasswordSaved(username: username, domain: urlString))
                 }
             }
             return nil
