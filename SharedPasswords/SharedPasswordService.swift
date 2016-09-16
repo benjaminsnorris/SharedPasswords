@@ -240,6 +240,7 @@ public struct SharedPasswordService {
                     savedDomainCredentials.removeValueForKey(username)
                     savedCredentials[urlString] = savedDomainCredentials
                     NSUserDefaults.standardUserDefaults().setObject(savedCredentials, forKey: SharedPasswordService.sharedCredentialsKey)
+                    store.dispatch(self.removeSharedCredentials(for: urlString, username: username))
                 })
             }
             alert.addAction(UIAlertAction(title: NSLocalizedString("Reset all credentials", comment: "Action title"), style: .Destructive) { action in
