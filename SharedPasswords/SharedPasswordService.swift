@@ -115,7 +115,6 @@ public struct SharedPasswordService {
                         return
                     }
                     store.dispatch(SharedPasswordRetrieved(username: username, password: password))
-                    guard let domain = domain else { return }
                 }
             }
             return nil
