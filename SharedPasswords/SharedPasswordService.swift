@@ -1,7 +1,7 @@
 /*
  |  _   ____   ____   _
- | ⎛ |‾|  ⚈ |-| ⚈  |‾| ⎞
- | ⎝ |  ‾‾‾‾| |‾‾‾‾  | ⎠
+ | | |‾|  ⚈ |-| ⚈  |‾| |
+ | | |  ‾‾‾‾| |‾‾‾‾  | |
  |  ‾        ‾        ‾
  */
 
@@ -102,7 +102,7 @@ public struct SharedPasswordService {
                         return
                     }
                     let arrayCredentials = unwrappedCredentials as [AnyObject]
-                    guard let typedCredentials = arrayCredentials as? [[String: AnyObject]] else {
+                    guard let typedCredentials = arrayCredentials as? [[String: Any]] else {
                         store.dispatch(SharedPasswordError(error: SharedPasswordServiceError.malformedCredentials))
                         return
                     }
@@ -123,9 +123,9 @@ public struct SharedPasswordService {
     
     public func saveSharedCredentialIfNeeded<T: StateType>(for urlString: String, username: String, password: String) -> (_ state: T, _ store: Store<T>) -> Action? {
         return { state, store in
-            var savedCredentials = [String: [String: AnyObject]]()
-            var savedDomainCredentials = [String: AnyObject]()
-            if let credentials = UserDefaults.standard.object(forKey: SharedPasswordService.sharedCredentialsKey) as? [String: [String: AnyObject]] {
+            var savedCredentials = [String: [String: Any]]()
+            var savedDomainCredentials = [String: Any]()
+            if let credentials = UserDefaults.standard.object(forKey: SharedPasswordService.sharedCredentialsKey) as? [String: [String: Any]] {
                 savedCredentials = credentials
                 if let domainCredentials = savedCredentials[urlString] {
                     savedDomainCredentials = domainCredentials
@@ -139,7 +139,7 @@ public struct SharedPasswordService {
                     store.dispatch(SharedPasswordError(error: error))
                     print("status=failed-to-add-shared-credential error=\(error) domain=\(urlString) username=\(username)")
                 } else {
-                    savedDomainCredentials[username] = true as AnyObject?
+                    savedDomainCredentials[username] = true
                     savedCredentials[urlString] = savedDomainCredentials
                     UserDefaults.standard.set(savedCredentials, forKey: SharedPasswordService.sharedCredentialsKey)
                     store.dispatch(SharedPasswordSaved(username: username, domain: urlString))
@@ -151,9 +151,9 @@ public struct SharedPasswordService {
     
     public func removeSharedCredentials<T: StateType>(for urlString: String, username: String) -> (_ state: T, _ store: Store<T>) -> Action? {
         return { state, store in
-            var savedCredentials = [String: [String: AnyObject]]()
-            var savedDomainCredentials = [String: AnyObject]()
-            if let credentials = UserDefaults.standard.object(forKey: SharedPasswordService.sharedCredentialsKey) as? [String: [String: AnyObject]] {
+            var savedCredentials = [String: [String: Any]]()
+            var savedDomainCredentials = [String: Any]()
+            if let credentials = UserDefaults.standard.object(forKey: SharedPasswordService.sharedCredentialsKey) as? [String: [String: Any]] {
                 savedCredentials = credentials
                 if let domainCredentials = savedCredentials[urlString] {
                     savedDomainCredentials = domainCredentials
@@ -175,14 +175,14 @@ public struct SharedPasswordService {
         }
     }
     
-    public func findLoginFrom1Password<T: StateType>(with urlString: String, viewController: UIViewController, button: AnyObject) -> (_ state: T, _ store: Store<T>) -> Action? {
+    public func findLoginFrom1Password<T: StateType>(with urlString: String, viewController: UIViewController, button: Any) -> (_ state: T, _ store: Store<T>) -> Action? {
         return { state, store in
             OnePasswordExtension.shared().findLogin(forURLString: urlString, for: viewController, sender: button) { loginDictionary, error in
                 guard error == nil else {
                     store.dispatch(SharedPasswordError(error: error!))
                     return
                 }
-                guard let loginDictionary = loginDictionary as? [String: AnyObject] , loginDictionary.count > 0 else {
+                guard let loginDictionary = loginDictionary as? [String: Any] , loginDictionary.count > 0 else {
                     store.dispatch(SharedPasswordError(error: SharedPasswordServiceError.malformedCredentials))
                     return
                 }
@@ -196,14 +196,14 @@ public struct SharedPasswordService {
         }
     }
     
-    public func createLoginIn1Password<T: StateType>(for urlString: String, appTitle: String, username: String? = nil, password: String? = nil, viewController: UIViewController, button: AnyObject) -> (_ state: T, _ store: Store<T>) -> Action? {
+    public func createLoginIn1Password<T: StateType>(for urlString: String, appTitle: String, username: String? = nil, password: String? = nil, viewController: UIViewController, button: Any) -> (_ state: T, _ store: Store<T>) -> Action? {
         return { state, store in
             let username = username ?? ""
             let password = password ?? ""
-            let loginDetails: [String: AnyObject] = [
-                AppExtensionTitleKey: appTitle as AnyObject,
-                AppExtensionUsernameKey: username as AnyObject,
-                AppExtensionPasswordKey: password as AnyObject,
+            let loginDetails: [String: Any] = [
+                AppExtensionTitleKey: appTitle as Any,
+                AppExtensionUsernameKey: username as Any,
+                AppExtensionPasswordKey: password as Any,
             ]
             OnePasswordExtension.shared().storeLogin(forURLString: urlString, loginDetails: loginDetails, passwordGenerationOptions: nil, for: viewController, sender: button) { loginDictionary, error in
                 DispatchQueue.main.async {
@@ -222,11 +222,11 @@ public struct SharedPasswordService {
         }
     }
     
-    public func presentResetSharedCredentials<T: StateType>(for urlString: String, username: String?, viewController: UIViewController, sender: AnyObject) -> (_ state: T, _ store: Store<T>) -> Action? {
+    public func presentResetSharedCredentials<T: StateType>(for urlString: String, username: String?, viewController: UIViewController, sender: Any) -> (_ state: T, _ store: Store<T>) -> Action? {
         return { state, store in
-            var savedCredentials = [String: [String: AnyObject]]()
-            var savedDomainCredentials = [String: AnyObject]()
-            if let credentials = UserDefaults.standard.object(forKey: SharedPasswordService.sharedCredentialsKey) as? [String: [String: AnyObject]] {
+            var savedCredentials = [String: [String: Any]]()
+            var savedDomainCredentials = [String: Any]()
+            if let credentials = UserDefaults.standard.object(forKey: SharedPasswordService.sharedCredentialsKey) as? [String: [String: Any]] {
                 savedCredentials = credentials
                 if let domainCredentials = savedCredentials[urlString] {
                     savedDomainCredentials = domainCredentials
