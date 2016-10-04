@@ -26,7 +26,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7026FB581D5702A300E7F2F6 /* OnePasswordExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OnePasswordExtension.framework; path = OnePasswordExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7026FB581D5702A300E7F2F6 /* OnePasswordExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OnePasswordExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		705EF4CC1D528F73000D65E1 /* SharedPasswords.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SharedPasswords.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		705EF4CF1D528F73000D65E1 /* SharedPasswords.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedPasswords.h; sourceTree = "<group>"; };
 		705EF4D11D528F73000D65E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -175,9 +175,11 @@
 				TargetAttributes = {
 					705EF4CB1D528F73000D65E1 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 					705EF4D51D528F73000D65E1 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -351,6 +353,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -369,6 +372,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = design.bsn.SharedPasswords;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -379,6 +383,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = design.bsn.SharedPasswordsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -389,6 +394,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = design.bsn.SharedPasswordsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
