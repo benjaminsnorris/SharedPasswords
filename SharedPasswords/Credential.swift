@@ -21,7 +21,7 @@ public struct Credential {
     
     // MARK: - Public properties
     
-    public var server: String
+    public var server: String?
     public var accountName: String
     
     
@@ -42,7 +42,7 @@ public struct Credential {
     
     // MARK: - Initializers
     
-    public init(server: String, accountName: String, password: String? = nil) {
+    public init(server: String?, accountName: String, password: String? = nil) {
         self.server = server
         self.accountName = accountName
         privatePassword = password
@@ -51,7 +51,7 @@ public struct Credential {
     
     // MARK: - Public functions
     
-    public static func allCredentials(for server: String) throws -> [Credential] {
+    public static func allCredentials(for server: String?) throws -> [Credential] {
         var query = Credential.keychainQuery(with: server)
         query[kSecMatchLimit as String] = kSecMatchLimitAll
         query[kSecReturnAttributes as String] = kCFBooleanTrue
@@ -93,6 +93,23 @@ public struct Credential {
         }
     }
     
+    public func delete() throws {
+        let query = Credential.keychainQuery(with: server, account: accountName)
+        let status = SecItemDelete(query as CFDictionary)
+        guard status == noErr || status == errSecItemNotFound else { throw KeychainError.unhandledError(status: status) }
+    }
+    
+}
+
+
+// MARK: - Custom string convertible
+
+extension Credential: CustomStringConvertible {
+    
+    public var description: String {
+        return "Credential(server: \(server), accountName: \(accountName)"
+    }
+    
 }
 
 
@@ -100,15 +117,15 @@ public struct Credential {
 
 private extension Credential {
     
-    static func keychainQuery(with server: String, account: String? = nil) -> [String: Any] {
+    static func keychainQuery(with server: String?, account: String? = nil) -> [String: Any] {
         var query = [String: Any]()
         query[kSecClass as String] = kSecClassInternetPassword
-        query[kSecAttrServer as String] = server
-        
+        if let server = server {
+            query[kSecAttrServer as String] = server
+        }
         if let account = account {
             query[kSecAttrAccount as String] = account
         }
-        
         return query
     }
     

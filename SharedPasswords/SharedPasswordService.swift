@@ -19,50 +19,24 @@ public struct SharedPasswordError: Action {
     }
 }
 
-public struct SharedPasswordRetrieved: Action, CustomStringConvertible {
-    public var username: String
-    public var password: String
-    
-    public init(username: String, password: String) {
-        self.username = username
-        self.password = password
-    }
-    
-    public var description: String {
-        return "SharedPasswordRetrieved(email:\(username))"
-    }
+public struct SharedPasswordRetrieved: Action {
+    public var credential: Credential
+    public init(credential: Credential) { self.credential = credential }
 }
 
-public struct SharedPasswordCreated: Action, CustomStringConvertible {
-    public var username: String
-    public var password: String
-    
-    public init(username: String, password: String) {
-        self.username = username
-        self.password = password
-    }
-    
-    public var description: String {
-        return "SharedPasswordRetrieved(email:\(username))"
-    }
+public struct SharedPasswordCreated: Action {
+    public var credential: Credential
+    public init(credential: Credential) { self.credential = credential }
 }
 
 public struct SharedPasswordSaved: Action {
-    public var domain: String
-    public var username: String
-    public init(username: String, domain: String) {
-        self.username = username
-        self.domain = domain
-    }
+    public var credential: Credential
+    public init(credential: Credential) { self.credential = credential }
 }
 
 public struct SharedPasswordRemoved: Action {
-    public var domain: String
-    public var username: String
-    public init(username: String, domain: String) {
-        self.username = username
-        self.domain = domain
-    }
+    public var credential: Credential
+    public init(credential: Credential) { self.credential = credential }
 }
 
 
@@ -106,15 +80,15 @@ public struct SharedPasswordService {
                         store.dispatch(SharedPasswordError(error: SharedPasswordServiceError.malformedCredentials))
                         return
                     }
-                    guard let credential = typedCredentials.first else {
+                    guard let credentialDictionary = typedCredentials.first else {
                         store.dispatch(SharedPasswordError(error: SharedPasswordServiceError.missingCredentials))
                         return
                     }
-                    guard let username = credential[String(kSecAttrAccount)] as? String, let password = credential[String(kSecSharedPassword)] as? String else {
+                    guard let username = credentialDictionary[String(kSecAttrAccount)] as? String, let password = credentialDictionary[String(kSecSharedPassword)] as? String else {
                         store.dispatch(SharedPasswordError(error: SharedPasswordServiceError.missingCredentials))
                         return
                     }
-                    store.dispatch(SharedPasswordRetrieved(username: username, password: password))
+                    let credential = Credential(server: domain, accountName: username, password: password)
                 }
             }
             return nil
@@ -142,7 +116,13 @@ public struct SharedPasswordService {
                     savedDomainCredentials[username] = true
                     savedCredentials[urlString] = savedDomainCredentials
                     UserDefaults.standard.set(savedCredentials, forKey: SharedPasswordService.sharedCredentialsKey)
-                    store.dispatch(SharedPasswordSaved(username: username, domain: urlString))
+                    let credential = Credential(server: urlString, accountName: username)
+                    do {
+                        try credential.save(password)
+                        store.dispatch(SharedPasswordSaved(credential: credential))
+                    } catch {
+                        store.dispatch(SharedPasswordError(error: error))
+                    }
                 }
             }
             return nil
@@ -168,7 +148,13 @@ public struct SharedPasswordService {
                     savedDomainCredentials.removeValue(forKey: username)
                     savedCredentials[urlString] = savedDomainCredentials
                     UserDefaults.standard.set(savedCredentials, forKey: SharedPasswordService.sharedCredentialsKey)
-                    store.dispatch(SharedPasswordSaved(username: username, domain: urlString))
+                    let credential = Credential(server: urlString, accountName: username)
+                    do {
+                        try credential.delete()
+                        store.dispatch(SharedPasswordRemoved(credential: credential))
+                    } catch {
+                        store.dispatch(SharedPasswordError(error: error))
+                    }
                 }
             }
             return nil
@@ -190,7 +176,8 @@ public struct SharedPasswordService {
                     store.dispatch(SharedPasswordError(error: SharedPasswordServiceError.missingCredentials))
                     return
                 }
-                store.dispatch(SharedPasswordRetrieved(username: username, password: password))
+                let credential = Credential(server: urlString, accountName: username, password: password)
+                store.dispatch(SharedPasswordRetrieved(credential: credential))
             }
             return nil
         }
@@ -212,7 +199,13 @@ public struct SharedPasswordService {
                             store.dispatch(SharedPasswordError(error: SharedPasswordServiceError.missingCredentials))
                             return
                         }
-                        store.dispatch(SharedPasswordCreated(username: username, password: password))
+                        let credential = Credential(server: urlString, accountName: username, password: password)
+                        do {
+                            try credential.save(password)
+                            store.dispatch(SharedPasswordCreated(credential: credential))
+                        } catch {
+                            store.dispatch(SharedPasswordError(error: error))
+                        }
                     } else if let error = error as? NSError, error.code != Int(AppExtensionErrorCodeCancelledByUser) {
                         store.dispatch(SharedPasswordError(error: error))
                     }
@@ -233,9 +226,9 @@ public struct SharedPasswordService {
                 }
             }
 
-            let alert = UIAlertController(title: NSLocalizedString("Reset shared credentials", comment: "Title for action sheet to reset shared credentials when logging in"), message: NSLocalizedString("This is typically not needed.\n\nBy default, the app will only save your shared credentials once, as subsequent attempts force you to confirm a password update whether it has changed or not.\n\nIf necessary, you can reset all shared credentials, or reset a specific username to force the credentials to save.", comment: "Explanation for action sheet to reset shared credentials"), preferredStyle: .actionSheet)
+            let alert = UIAlertController(title: NSLocalizedString("Reset shared credentials", comment: "Title for action sheet to reset shared credentials when logging in"), message: NSLocalizedString("This is typically not needed.\n\nBy default, the app will only save your shared credentials once, as subsequent attempts force you to confirm a password update whether it has changed or not.\n\nIf necessary, you can reset all shared credentials, or remove a specific saved password to force the credentials to save.", comment: "Explanation for action sheet to reset shared credentials"), preferredStyle: .actionSheet)
             if let username = username , username.characters.count > 0 {
-                alert.addAction(UIAlertAction(title: NSLocalizedString("Force password update", comment: "Action title"), style: .default) { action in
+                alert.addAction(UIAlertAction(title: NSLocalizedString("Remove saved password", comment: "Action title"), style: .destructive) { action in
                     savedDomainCredentials.removeValue(forKey: username)
                     savedCredentials[urlString] = savedDomainCredentials
                     UserDefaults.standard.set(savedCredentials, forKey: SharedPasswordService.sharedCredentialsKey)
