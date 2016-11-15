@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7012353B1DDB926600055B26 /* Credential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7012353A1DDB926600055B26 /* Credential.swift */; };
 		7026FB591D5702A300E7F2F6 /* OnePasswordExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7026FB581D5702A300E7F2F6 /* OnePasswordExtension.framework */; };
 		705EF4D01D528F73000D65E1 /* SharedPasswords.h in Headers */ = {isa = PBXBuildFile; fileRef = 705EF4CF1D528F73000D65E1 /* SharedPasswords.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		705EF4D71D528F73000D65E1 /* SharedPasswords.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 705EF4CC1D528F73000D65E1 /* SharedPasswords.framework */; };
@@ -26,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7012353A1DDB926600055B26 /* Credential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credential.swift; sourceTree = "<group>"; };
 		7026FB581D5702A300E7F2F6 /* OnePasswordExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OnePasswordExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		705EF4CC1D528F73000D65E1 /* SharedPasswords.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SharedPasswords.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		705EF4CF1D528F73000D65E1 /* SharedPasswords.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedPasswords.h; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				705EF4E81D528FFF000D65E1 /* SharedPasswordService.swift */,
+				7012353A1DDB926600055B26 /* Credential.swift */,
 				705EF4EA1D529002000D65E1 /* Supporting Files */,
 			);
 			path = SharedPasswords;
@@ -223,6 +226,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7012353B1DDB926600055B26 /* Credential.swift in Sources */,
 				705EF4E91D528FFF000D65E1 /* SharedPasswordService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
