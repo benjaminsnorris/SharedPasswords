@@ -88,6 +88,7 @@ public struct Credential {
         } catch KeychainError.noPassword {
             var newCredential = Credential.keychainQuery(with: server, account: accountName)
             newCredential[kSecValueData as String] = encodedPassword
+            newCredential[kSecAttrSynchronizable as String] = kCFBooleanTrue
             let status = SecItemAdd(newCredential as CFDictionary, nil)
             guard status == noErr else { throw KeychainError.unhandledError(status: status) }
         }
@@ -120,6 +121,7 @@ private extension Credential {
     static func keychainQuery(with server: String?, account: String? = nil) -> [String: Any] {
         var query = [String: Any]()
         query[kSecClass as String] = kSecClassInternetPassword
+        query[kSecAttrSynchronizable as String] = kSecAttrSynchronizableAny
         if let server = server {
             query[kSecAttrServer as String] = server
         }
