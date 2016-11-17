@@ -89,6 +89,7 @@ public struct SharedPasswordService {
                         return
                     }
                     let credential = Credential(server: domain, accountName: username, password: password)
+                    store.dispatch(SharedPasswordRetrieved(credential: credential))
                 }
             }
             return nil
