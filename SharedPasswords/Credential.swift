@@ -7,6 +7,8 @@
 
 import Foundation
 
+public let sharedCredentialsKey = "sharedCredentials"
+
 public struct Credential {
     
     // MARK: - Enums
@@ -23,7 +25,7 @@ public struct Credential {
     
     public var server: String?
     public var accountName: String
-    
+
     
     // MARK: - Computed properties
     
