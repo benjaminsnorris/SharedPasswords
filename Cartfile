@@ -1,2 +1,2 @@
-github "ReSwift/ReSwift" ~> 2.1
+github "jarsen/Reactor" ~> 0.5
 github "benjaminsnorris/onepassword-app-extension" ~> 1.8

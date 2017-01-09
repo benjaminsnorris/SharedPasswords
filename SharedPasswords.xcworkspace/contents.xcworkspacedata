@@ -5,9 +5,9 @@
       location = "container:SharedPasswords.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Carthage/Checkouts/ReSwift/ReSwift.xcodeproj">
+      location = "group:Carthage/Checkouts/onepassword-app-extension/OnePasswordExtension.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Carthage/Checkouts/onepassword-app-extension/OnePasswordExtension.xcodeproj">
+      location = "group:Carthage/Checkouts/Reactor/Reactor.xcodeproj">
    </FileRef>
 </Workspace>
