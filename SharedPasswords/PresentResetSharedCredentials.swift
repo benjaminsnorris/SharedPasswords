@@ -8,14 +8,21 @@
 import OnePasswordExtension
 import Reactor
 
-struct PresentResetSharedCredentials<T: State>: Command {
+public struct PresentResetSharedCredentials<T: State>: Command {
     
-    var urlString: String
-    var username: String?
-    var viewController: UIViewController
-    var sender: Any
+    public var urlString: String
+    public var username: String?
+    public var viewController: UIViewController
+    public var sender: Any
     
-    func execute(state: T, core: Core<T>) {
+    public init(urlString: String, username: String?, viewController: UIViewController, sender: Any) {
+        self.urlString = urlString
+        self.username = username
+        self.viewController = viewController
+        self.sender = sender
+    }
+    
+    public func execute(state: T, core: Core<T>) {
         var savedCredentials = [String: [String: Any]]()
         var savedDomainCredentials = [String: Any]()
         if let credentials = UserDefaults.standard.object(forKey: Keys.sharedCredentials) as? [String: [String: Any]] {

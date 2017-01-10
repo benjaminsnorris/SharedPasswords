@@ -7,12 +7,17 @@
 
 import Reactor
 
-struct RemoveSharedCredentials<T: State>: Command {
+public struct RemoveSharedCredentials<T: State>: Command {
     
-    var urlString: String
-    var username: String
+    public var urlString: String
+    public var username: String
     
-    func execute(state: T, core: Core<T>) {
+    public init(urlString: String, username: String) {
+        self.urlString = urlString
+        self.username = username
+    }
+    
+    public func execute(state: T, core: Core<T>) {
         var savedCredentials = [String: [String: Any]]()
         var savedDomainCredentials = [String: Any]()
         

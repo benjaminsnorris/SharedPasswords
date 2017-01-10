@@ -7,11 +7,15 @@
 
 import Reactor
 
-struct RequestCredentials<T: State>: Command {
+public struct RequestCredentials<T: State>: Command {
     
-    var domain: String?
+    public var domain: String?
     
-    func execute(state: T, core: Core<T>) {
+    public init(domain: String?) {
+        self.domain = domain
+    }
+    
+    public func execute(state: T, core: Core<T>) {
         SecRequestSharedWebCredential(self.domain as CFString?, nil) { credentials, error in
             guard error == nil else {
                 core.fire(event: SharedPasswordErrorEvent(error: error!))
