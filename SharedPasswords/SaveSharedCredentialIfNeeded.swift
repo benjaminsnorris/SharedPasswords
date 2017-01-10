@@ -7,13 +7,19 @@
 
 import Reactor
 
-struct SaveSharedCredentialIfNeeded<T: State>: Command {
+public struct SaveSharedCredentialIfNeeded<T: State>: Command {
     
-    var urlString: String
-    var username: String
-    var password: String
+    public var urlString: String
+    public var username: String
+    public var password: String
     
-    func execute(state: T, core: Core<T>) {
+    public init(urlString: String, username: String, password: String) {
+        self.urlString = urlString
+        self.username = username
+        self.password = password
+    }
+    
+    public func execute(state: T, core: Core<T>) {
         var savedCredentials = [String: [String: Any]]()
         var savedDomainCredentials = [String: Any]()
         if let credentials = UserDefaults.standard.object(forKey: Keys.sharedCredentials) as? [String: [String: Any]] {

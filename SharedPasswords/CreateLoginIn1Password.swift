@@ -8,17 +8,25 @@
 import Reactor
 import OnePasswordExtension
 
-struct CreateLoginIn1Password<T: State>: Command {
+public struct CreateLoginIn1Password<T: State>: Command {
     
-    var urlString: String
-    var appTitle: String
-    var username: String?
-    var password: String?
-    var viewController: UIViewController
-    var button: Any
+    public var urlString: String
+    public var appTitle: String
+    public var username: String?
+    public var password: String?
+    public var viewController: UIViewController
+    public var button: Any
     
-    func execute(state: T, core: Core<T>) {
-        
+    public init(urlString: String, appTitle: String, username: String?, password: String?, viewController: UIViewController, button: Any) {
+        self.urlString = urlString
+        self.appTitle = appTitle
+        self.username = username
+        self.password = password
+        self.viewController = viewController
+        self.button = button
+    }
+    
+    public func execute(state: T, core: Core<T>) {
         let loginDetails: [String: Any] = [
             AppExtensionTitleKey: self.appTitle as Any,
             AppExtensionUsernameKey: self.username as Any,
