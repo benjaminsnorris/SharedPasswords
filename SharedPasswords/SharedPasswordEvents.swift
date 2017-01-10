@@ -46,3 +46,8 @@ public struct SharedPasswordRemoved: Event {
     public var credential: Credential
     public init(credential: Credential) { self.credential = credential }
 }
+
+
+enum Keys {
+    static let sharedCredentials = "sharedCredentials"
+}

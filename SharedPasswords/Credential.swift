@@ -7,8 +7,6 @@
 
 import Foundation
 
-public let sharedCredentialsKey = "sharedCredentials"
-
 public struct Credential {
     
     // MARK: - Enums

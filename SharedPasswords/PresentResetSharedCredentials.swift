@@ -18,7 +18,7 @@ struct PresentResetSharedCredentials<T: State>: Command {
     func execute(state: T, core: Core<T>) {
         var savedCredentials = [String: [String: Any]]()
         var savedDomainCredentials = [String: Any]()
-        if let credentials = UserDefaults.standard.object(forKey: sharedCredentialsKey) as? [String: [String: Any]] {
+        if let credentials = UserDefaults.standard.object(forKey: Keys.sharedCredentials) as? [String: [String: Any]] {
             savedCredentials = credentials
             if let domainCredentials = savedCredentials[urlString] {
                 savedDomainCredentials = domainCredentials
@@ -29,13 +29,13 @@ struct PresentResetSharedCredentials<T: State>: Command {
             alert.addAction(UIAlertAction(title: NSLocalizedString("Remove saved password", comment: "Event title"), style: .destructive, handler: { _ in
                 savedDomainCredentials.removeValue(forKey: username)
                 savedCredentials[self.urlString] = savedDomainCredentials
-                UserDefaults.standard.set(savedCredentials, forKey: sharedCredentialsKey)
+                UserDefaults.standard.set(savedCredentials, forKey: Keys.sharedCredentials)
                 core.fire(command: RemoveSharedCredentials(urlString: self.urlString, username: username))
             }))
         }
         alert.addAction(UIAlertAction(title: NSLocalizedString("Reset all credentials", comment: "Event title"), style: .destructive) { action in
             savedCredentials.removeValue(forKey: self.urlString)
-            UserDefaults.standard.set(savedCredentials, forKey: sharedCredentialsKey)
+            UserDefaults.standard.set(savedCredentials, forKey: Keys.sharedCredentials)
         })
         alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel button title"), style: .cancel, handler: nil))
         if let barButtonItem = sender as? UIBarButtonItem {

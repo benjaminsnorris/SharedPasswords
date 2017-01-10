@@ -16,7 +16,7 @@ struct RemoveSharedCredentials<T: State>: Command {
         var savedCredentials = [String: [String: Any]]()
         var savedDomainCredentials = [String: Any]()
         
-        if let credentials = UserDefaults.standard.object(forKey: sharedCredentialsKey) as? [String: [String: Any]] {
+        if let credentials = UserDefaults.standard.object(forKey: Keys.sharedCredentials) as? [String: [String: Any]] {
             savedCredentials = credentials
             if let domainCredentials = savedCredentials[urlString] {
                 savedDomainCredentials = domainCredentials
@@ -30,7 +30,7 @@ struct RemoveSharedCredentials<T: State>: Command {
             } else {
                 savedDomainCredentials.removeValue(forKey: self.username)
                 savedCredentials[self.urlString] = savedDomainCredentials
-                UserDefaults.standard.set(savedCredentials, forKey: sharedCredentialsKey)
+                UserDefaults.standard.set(savedCredentials, forKey: Keys.sharedCredentials)
                 let credential = Credential(server: self.urlString, accountName: self.username)
                 do {
                     try credential.delete()
