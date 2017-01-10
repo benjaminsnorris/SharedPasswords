@@ -23,7 +23,7 @@ public struct Credential {
     
     public var server: String?
     public var accountName: String
-    
+
     
     // MARK: - Computed properties
     

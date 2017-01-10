@@ -12,8 +12,14 @@
 		705EF4D01D528F73000D65E1 /* SharedPasswords.h in Headers */ = {isa = PBXBuildFile; fileRef = 705EF4CF1D528F73000D65E1 /* SharedPasswords.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		705EF4D71D528F73000D65E1 /* SharedPasswords.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 705EF4CC1D528F73000D65E1 /* SharedPasswords.framework */; };
 		705EF4DC1D528F73000D65E1 /* SharedPasswordsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705EF4DB1D528F73000D65E1 /* SharedPasswordsTests.swift */; };
-		705EF4E91D528FFF000D65E1 /* SharedPasswordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705EF4E81D528FFF000D65E1 /* SharedPasswordService.swift */; };
-		705EF50E1D529125000D65E1 /* ReSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 705EF50D1D529125000D65E1 /* ReSwift.framework */; };
+		705EF4E91D528FFF000D65E1 /* SharedPasswordEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705EF4E81D528FFF000D65E1 /* SharedPasswordEvents.swift */; };
+		A10C4D061E240D120090E1A3 /* Reactor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10C4D051E240D120090E1A3 /* Reactor.framework */; };
+		A10C4D081E241C690090E1A3 /* RequestCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C4D071E241C690090E1A3 /* RequestCredentials.swift */; };
+		A10C4D0A1E241CB30090E1A3 /* SaveSharedCredentialIfNeeded.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C4D091E241CB30090E1A3 /* SaveSharedCredentialIfNeeded.swift */; };
+		A10C4D0D1E241CF60090E1A3 /* RemoveSharedCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C4D0C1E241CF60090E1A3 /* RemoveSharedCredentials.swift */; };
+		A10C4D0F1E241D3C0090E1A3 /* FindLoginFrom1Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C4D0E1E241D3C0090E1A3 /* FindLoginFrom1Password.swift */; };
+		A10C4D111E241D670090E1A3 /* CreateLoginIn1Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C4D101E241D670090E1A3 /* CreateLoginIn1Password.swift */; };
+		A10C4D131E241D960090E1A3 /* PresentResetSharedCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C4D121E241D960090E1A3 /* PresentResetSharedCredentials.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,8 +41,14 @@
 		705EF4D61D528F73000D65E1 /* SharedPasswordsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SharedPasswordsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		705EF4DB1D528F73000D65E1 /* SharedPasswordsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedPasswordsTests.swift; sourceTree = "<group>"; };
 		705EF4DD1D528F73000D65E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		705EF4E81D528FFF000D65E1 /* SharedPasswordService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedPasswordService.swift; sourceTree = "<group>"; };
-		705EF50D1D529125000D65E1 /* ReSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ReSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		705EF4E81D528FFF000D65E1 /* SharedPasswordEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedPasswordEvents.swift; sourceTree = "<group>"; };
+		A10C4D051E240D120090E1A3 /* Reactor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reactor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10C4D071E241C690090E1A3 /* RequestCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestCredentials.swift; sourceTree = "<group>"; };
+		A10C4D091E241CB30090E1A3 /* SaveSharedCredentialIfNeeded.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveSharedCredentialIfNeeded.swift; sourceTree = "<group>"; };
+		A10C4D0C1E241CF60090E1A3 /* RemoveSharedCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoveSharedCredentials.swift; sourceTree = "<group>"; };
+		A10C4D0E1E241D3C0090E1A3 /* FindLoginFrom1Password.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindLoginFrom1Password.swift; sourceTree = "<group>"; };
+		A10C4D101E241D670090E1A3 /* CreateLoginIn1Password.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateLoginIn1Password.swift; sourceTree = "<group>"; };
+		A10C4D121E241D960090E1A3 /* PresentResetSharedCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentResetSharedCredentials.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,8 +56,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10C4D061E240D120090E1A3 /* Reactor.framework in Frameworks */,
 				7026FB591D5702A300E7F2F6 /* OnePasswordExtension.framework in Frameworks */,
-				705EF50E1D529125000D65E1 /* ReSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,8 +94,9 @@
 		705EF4CE1D528F73000D65E1 /* SharedPasswords */ = {
 			isa = PBXGroup;
 			children = (
-				705EF4E81D528FFF000D65E1 /* SharedPasswordService.swift */,
 				7012353A1DDB926600055B26 /* Credential.swift */,
+				705EF4E81D528FFF000D65E1 /* SharedPasswordEvents.swift */,
+				A10C4D0B1E241CDD0090E1A3 /* Commands */,
 				705EF4EA1D529002000D65E1 /* Supporting Files */,
 			);
 			path = SharedPasswords;
@@ -110,10 +123,23 @@
 		705EF50F1D529129000D65E1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A10C4D051E240D120090E1A3 /* Reactor.framework */,
 				7026FB581D5702A300E7F2F6 /* OnePasswordExtension.framework */,
-				705EF50D1D529125000D65E1 /* ReSwift.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A10C4D0B1E241CDD0090E1A3 /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				A10C4D101E241D670090E1A3 /* CreateLoginIn1Password.swift */,
+				A10C4D0E1E241D3C0090E1A3 /* FindLoginFrom1Password.swift */,
+				A10C4D121E241D960090E1A3 /* PresentResetSharedCredentials.swift */,
+				A10C4D0C1E241CF60090E1A3 /* RemoveSharedCredentials.swift */,
+				A10C4D071E241C690090E1A3 /* RequestCredentials.swift */,
+				A10C4D091E241CB30090E1A3 /* SaveSharedCredentialIfNeeded.swift */,
+			);
+			name = Commands;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,8 +252,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10C4D0D1E241CF60090E1A3 /* RemoveSharedCredentials.swift in Sources */,
+				A10C4D081E241C690090E1A3 /* RequestCredentials.swift in Sources */,
 				7012353B1DDB926600055B26 /* Credential.swift in Sources */,
-				705EF4E91D528FFF000D65E1 /* SharedPasswordService.swift in Sources */,
+				A10C4D111E241D670090E1A3 /* CreateLoginIn1Password.swift in Sources */,
+				A10C4D0F1E241D3C0090E1A3 /* FindLoginFrom1Password.swift in Sources */,
+				A10C4D0A1E241CB30090E1A3 /* SaveSharedCredentialIfNeeded.swift in Sources */,
+				705EF4E91D528FFF000D65E1 /* SharedPasswordEvents.swift in Sources */,
+				A10C4D131E241D960090E1A3 /* PresentResetSharedCredentials.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
