@@ -3,4 +3,4 @@
 	url = https://github.com/benjaminsnorris/onepassword-app-extension.git
 [submodule "Carthage/Checkouts/Reactor"]
 	path = Carthage/Checkouts/Reactor
-	url = https://github.com/jarsen/Reactor.git
+	url = https://github.com/ReactorSwift/Reactor.git
