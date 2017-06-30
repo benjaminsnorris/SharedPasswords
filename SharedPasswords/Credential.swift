@@ -108,7 +108,7 @@ public struct Credential {
 extension Credential: CustomStringConvertible {
     
     public var description: String {
-        return "Credential(server: \(server), accountName: \(accountName)"
+        return "Credential(server: \(String(describing: server)), accountName: \(accountName)"
     }
     
 }

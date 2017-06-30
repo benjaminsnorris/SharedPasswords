@@ -46,7 +46,7 @@ public struct CreateLoginIn1Password<T: State>: Command {
                 } catch {
                     core.fire(event: SharedPasswordErrorEvent(error: error))
                 }
-            } else if let error = error as? NSError, error.code != Int(AppExtensionErrorCodeCancelledByUser) {
+            } else if let error = error as NSError?, error.code != Int(AppExtensionErrorCodeCancelledByUser) {
                 core.fire(event: SharedPasswordErrorEvent(error: error))
             }
         }
